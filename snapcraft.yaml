@@ -1,0 +1,69 @@
+name: optiimage
+base: core22
+adopt-info: optiimage
+version: git
+license: GPL-3.0-or-later
+grade: stable
+confinement: strict
+
+parts:
+  optiimage:
+    plugin: cmake
+    source: https://invent.kde.org/graphics/optiimage.git
+    source-depth: 1
+    # source-tag:
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+    parse-info: [usr/share/metainfo/org.kde.optiimage.metainfo.xml]
+    
+  oxipng:
+    source: https://github.com/shssoichiro/oxipng.git
+    source-tag: 'v9.1.2'
+    source-depth: 1
+    plugin: rust
+    organize:
+      oxipng: usr/bin/oxipng
+
+  scour:
+    source: .
+    plugin: python
+    python-packages:
+      - scour
+    organize:
+      bin: usr/bin
+      lib/python3.10/site-packages: usr/lib/python3/dist-packages
+    prime:
+      - -usr/bin/activate*
+      - -usr/bin/Activate.ps1
+      - -usr/bin/python*
+      - -usr/bin/pip*
+      - -pyvenv.cfg
+      - -usr/lib/*/*/setup*
+      - -usr/lib/*/*/pkg*
+      - -usr/lib/*/*/pip*
+      - -usr/lib/*/*/_dist*
+      - -share
+      - -include
+
+  deb-packages:
+    plugin: nil
+    stage-packages:
+      - jpegoptim
+      - webp
+    prime:
+      - usr/bin/jpegoptim
+      - usr/bin/cwebp
+      - usr/lib/*/libwebpdemux.so*
+
+apps:
+  optiimage:
+    command: usr/bin/optiimage
+    desktop: usr/share/applications/org.kde.optiimage.desktop
+    common-id: org.kde.optiimage
+    environment:
+      XDG_CONFIG_DIRS: $SNAP_REAL_HOME/.config
+    extensions: [kde-neon-6]
+    plugs:
+      - home
+      - removable-media
+
