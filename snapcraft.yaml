@@ -10,6 +10,8 @@ parts:
     source: https://invent.kde.org/graphics/optiimage.git
     source-depth: 1
     source-tag: 'v1.0.0'
+    build-packages:
+      - libproxy1v5
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
     parse-info: [usr/share/metainfo/org.kde.optiimage.metainfo.xml]
