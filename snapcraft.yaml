@@ -1,5 +1,5 @@
 name: optiimage
-base: core22
+base: core24
 adopt-info: optiimage
 grade: stable
 confinement: strict
@@ -58,10 +58,7 @@ apps:
     command: usr/bin/optiimage
     desktop: usr/share/applications/org.kde.optiimage.desktop
     common-id: org.kde.optiimage
-    environment:
-      XDG_CONFIG_DIRS: $SNAP_REAL_HOME/.config
     extensions: [kde-neon-6]
     plugs:
       - home
       - removable-media
-
